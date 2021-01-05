@@ -8,8 +8,11 @@ public class Main {
         boolean isTwoPlayers = true;
         String playerOneName = "";
         String playerTwoName = "";
+
+        //Both contain three pronouns: subjective, objective, and possessive forms.
         ArrayList<String> playerOnePronouns = new ArrayList<>();
         ArrayList<String> playerTwoPronouns = new ArrayList<>();
+
         StringBuilder allCaps = new StringBuilder();
         StringBuilder ASCIIword = new StringBuilder();
         StringBuilder progress = new StringBuilder();
@@ -172,7 +175,7 @@ public class Main {
                 }
             }
             p(ASCIIword);
-            p("Nice word! That'll perplex " + playerTwoName + " for sure! Let ");
+            p("Nice word! That'll perplex " + playerTwoName + " for sure! Let " + playerTwoPronouns.get(1) + " know that " + playerTwoPronouns.get(0) + " can come back and start guessing...OOH, THIS WILL BE GOOD!");
         }
     }
 
