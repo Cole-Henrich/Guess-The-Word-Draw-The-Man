@@ -176,6 +176,9 @@ public class Main {
             }
             p(ASCIIword);
             p("Nice word! That'll perplex " + playerTwoName + " for sure! Let " + playerTwoPronouns.get(1) + " know that " + playerTwoPronouns.get(0) + " can come back and start guessing...OOH, THIS WILL BE GOOD!");
+            p("Hello " + playerTwoName +"! Enter your the first letter you are guessing, uppercase please, whenever you are ready.");
+            Scanner s11 = new Scanner(System.in);
+            String userInput11 = s11.next();
         }
     }
 
