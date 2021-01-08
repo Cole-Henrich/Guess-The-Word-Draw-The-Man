@@ -1,14 +1,16 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class Main {
     //][\/][ //-\ ][_) ]E  ][3 ``//  //-\  // ] _) ]][ ((5 << ]][ ]]p ][_ ]E   [[]] ][=   ][\/][ //-\ ((5 `][` ]E ][2    ][3 ][2 ]][ //-\ ][\][   ((5 ]E //-\
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, FileNotFoundException {
+getDictionary();
         boolean isASCII = true;
         boolean isTwoPlayers = true;
         String playerOneName = "";
         String playerTwoName = "";
-
+        p(getASCIIalphabet()[0]);
         //Both contain three pronouns: subjective, objective, and possessive forms.
         ArrayList<String> playerOnePronouns = new ArrayList<>();
         ArrayList<String> playerTwoPronouns = new ArrayList<>();
@@ -23,7 +25,6 @@ public class Main {
                 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
         };
         boolean wantsToPlay = true;
-        while (wantsToPlay) {
                 p("Hello! Welcome to 'draw-the-man' - a computerized edition of the classic Hang-Man!\n" +
                         "Are you familiar with the premise of the game?");
                 Scanner s = new Scanner(System.in);
@@ -180,12 +181,15 @@ public class Main {
                     p("Nice word! That'll perplex " + playerTwoName + " for sure! Let " + playerTwoPronouns.get(1) + " know that " + playerTwoPronouns.get(0) + " can come back and start guessing...OOH, THIS WILL BE GOOD!");
                     p("Hello " + playerTwoName + "! Enter the first letter you are guessing, whenever you are ready.");
                     ArrayList<String> progressOnWord = new ArrayList<>();
+                    ArrayList<String>ASCIIform = new ArrayList<>();
                     for (int i = 0; i < word.length(); i++) {
                         progressOnWord.add("0");
+                        ASCIIform.add("0");
                     }
                     int numberCorrect = 0;
                     int numberWrong = 0;
                     String[] ASCIIalphabet = getASCIIalphabet();
+                    String ASCIIblank = ASCIIalphabet[26];
                     String[] drawing = getDrawing();
                     for (int i = 0; i < 26; i++) {
                         p("Please enter the letter:");
@@ -193,19 +197,33 @@ public class Main {
                         String guess = sc.next();
 
                         if (word.contains(guess)) {
-                            numberCorrect++;
-                            p(numberCorrect);
-                            progressOnWord.set(i, guess);
+                                for (int location = 0; location < word.length(); location++) {
+                                    String letter = String.valueOf(word.charAt(location));
+                                    if (letter.equalsIgnoreCase(guess)) {
+                                        progressOnWord.set(location, guess);
+                                    }
+                                }
+                                numberCorrect++;
+                                p(numberCorrect);
                         }
 
                         for (int j = 0; j < progressOnWord.size(); j++) {
                             String wordPlace = progressOnWord.get(j);
                             if (wordPlace.equals("0")) {
-
+                                ASCIIform.set(j, ASCIIblank);
+                            }
+                            for (int k = 0; k < lowercase.length; k++) {
+                                String letter = String.valueOf(lowercase[k]);
+                                String ASCIIletter = ASCIIalphabet[k];
+                                if (wordPlace.equalsIgnoreCase(letter)) {
+                                    ASCIIform.set(j, ASCIIletter);
+                                }
                             }
                         }
+                        p(ASCIIform);
                         if (!word.contains(guess)) {
                             numberWrong++;
+                            p(drawing[numberWrong]);
                         }
                         if (numberWrong == (drawing.length-1))  {
                             p("Good game! Would you like to play again?");
@@ -219,10 +237,103 @@ public class Main {
                         }
                     }
                 }
+        }
+public static ArrayList<String> getDictionary() throws FileNotFoundException {
+    int Gatsbycount = 0;
+    ArrayList<String> Gatsbyuniquewords = new ArrayList<>();
+    File Gatsby = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/dictionary.txt");
+    Scanner scanner01 = new Scanner(Gatsby);
+    while (scanner01.hasNext()) {
+        String dictionaryWord = scanner01.next();
+        p(dictionaryWord);
+        if (dictionaryWord.length() >= 10) {
+            if (!Gatsbyuniquewords.contains(dictionaryWord)) {
+                Gatsbyuniquewords.add(dictionaryWord);
+                Gatsbycount++;
             }
         }
+    }
+    p(Gatsbyuniquewords);
+    p(Gatsbycount);
+    int JungleBookcount = 0;
+    ArrayList<String> JungleBookuniquewords = new ArrayList<>();
+    File JungleBook = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/JungleBook.txt");
+    Scanner scanner02 = new Scanner(JungleBook);
+    while (scanner02.hasNext()) {
+        String JungleBookDictionaryWord = scanner02.next();
+        p(JungleBookDictionaryWord);
+        if (JungleBookDictionaryWord.length() >= 8) {
+            if (!JungleBookuniquewords.contains(JungleBookDictionaryWord)) {
+                JungleBookuniquewords.add(JungleBookDictionaryWord);
+                JungleBookcount++;
+            }
+        }
+    }
+    p(JungleBookuniquewords);
+    p(JungleBookcount);
 
+    int FullDictionarycount = 0;
+    ArrayList<String> FullDictionaryuniquewords = new ArrayList<>();
+    File FullDictionary = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/JungleBook+Gatsby.txt");
+    Scanner scanner03 = new Scanner(FullDictionary);
+    while (scanner03.hasNext()) {
+        String FullDictionaryDictionaryWord = scanner03.next();
+        p(FullDictionaryDictionaryWord);
+        if (FullDictionaryDictionaryWord.length() >= 8) {
+            if (!FullDictionaryuniquewords.contains(FullDictionaryDictionaryWord)) {
+                FullDictionaryuniquewords.add(FullDictionaryDictionaryWord);
+                FullDictionarycount++;
+            }
+        }
+    }
+    p(FullDictionaryuniquewords);
+    p(FullDictionarycount);
+    p("""
+            Bummer you're lonely! It's ok, this game loves solo players! 
+            Plus, we've got thousands of words so you can play for hours on end.
+            A word will be generated for you to guess. You can pick which dictionary it comes from: 
+            ------The Gatsby Dictionary-----
+            
+            The Gatsby Dictionary is composed of all the unique words over 9 letters occurring in the Great Gatsby.
+            __________________________________
+            """);
+    p("If you choose the Gatsby Dictionary, your word can be one of " + Gatsbycount + " words. Wow, that's a lot!");
 
+p("""
+        ________The Jungle Book Dictionary----------
+        
+        Composed of all the unique words over 7 letters occurring in The Jungle Book. Rudyard Kipling likes short words!
+        ______________________________________________
+        """);
+    p("If you choose the Jungle Book Dictionary, your word can be one of " + JungleBookcount + " words. Wow, that's a lot!");
+p("""
+        Finally, you can combine the two into one BIG MAMA DICTIONARY!!!
+        
+        """);
+p("If you choose the BIG MAMA DICTIONARY, your word can be one of " + FullDictionarycount + " words. Wow...that is REALLY a lot!");
+
+p("""
+        So! You've seen the choices! Which do you choose? 
+        Enter: 
+        0 for the Great Gatsby Dictionary
+        1 for the Jungle Book Dictionary
+        2 for the BIG MAMA DICTIONARY!!!!!
+        """);
+ArrayList<String>Dictionary = new ArrayList<>();
+Scanner s0001 = new Scanner(System.in);
+String userInput0001 = s0001.next();
+
+    if (userInput0001.equals(0)) {
+        Dictionary = Gatsbyuniquewords;
+    }
+    if (userInput0001.equals(1)) {
+        Dictionary = JungleBookuniquewords;
+    }
+    if (userInput0001.equals(2)) {
+        Dictionary = FullDictionaryuniquewords;
+    }
+    return Dictionary;
+}
 
     /**
      *  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .-----------------. .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.
@@ -582,271 +693,297 @@ public static void getasciiDemo() throws InterruptedException {
      */
         public static String[] getASCIIalphabet() {
         String[] ASCIIalphabet = {
-                " .----------------. \n" +
-                        "| .--------------. |\n" +
-                        "| |      __      | |\n" +
-                        "| |     /  \\     | |\n" +
-                        "| |    / /\\ \\    | |\n" +
-                        "| |   / ____ \\   | |\n" +
-                        "| | _/ /    \\ \\_ | |\n" +
-                        "| ||____|  |____|| |\n" +
-                        "| |              | |\n" +
-                        "| '--------------' |\n" +
-                        " '----------------' ",
+                """
+ .----------------.\s
+| .--------------. |
+| |      __      | |
+| |     /  \\     | |
+| |    / /\\ \\    | |
+| |   / ____ \\   | |
+| | _/ /    \\ \\_ | |
+| ||____|  |____|| |
+| |              | |
+| '--------------' |
+ '----------------'\s""",
 
-                " .----------------. \n" +
-                        "| .--------------. |\n" +
-                        "| |   ______     | |\n" +
-                        "| |  |_   _ \\    | |\n" +
-                        "| |    | |_) |   | |\n" +
-                        "| |    |  __'.   | |\n" +
-                        "| |   _| |__) |  | |\n" +
-                        "| |  |_______/   | |\n" +
-                        "| |              | |\n" +
-                        "| '--------------' |\n" +
-                        " '----------------' ",
-                " .----------------. \n" +
-                        "| .--------------. |\n" +
-                        "| |     ______   | |\n" +
-                        "| |   .' ___  |  | |\n" +
-                        "| |  / .'   \\_|  | |\n" +
-                        "| |  | |         | |\n" +
-                        "| |  \\ `.___.'\\  | |\n" +
-                        "| |   `._____.'  | |\n" +
-                        "| |              | |\n" +
-                        "| '--------------' |\n" +
-                        " '----------------' ",
-                " .----------------. \n" +
-                        "| .--------------. |\n" +
-                        "| |  ________    | |\n" +
-                        "| | |_   ___ `.  | |\n" +
-                        "| |   | |   `. \\ | |\n" +
-                        "| |   | |    | | | |\n" +
-                        "| |  _| |___.' / | |\n" +
-                        "| | |________.'  | |\n" +
-                        "| |              | |\n" +
-                        "| '--------------' |\n" +
-                        " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| |  _________   | |\n" +
-                "| | |_   ___  |  | |\n" +
-                "| |   | |_  \\_|  | |\n" +
-                "| |   |  _|  _   | |\n" +
-                "| |  _| |___/ |  | |\n" +
-                "| | |_________|  | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| |  _________   | |\n" +
-                "| | |_   ___  |  | |\n" +
-                "| |   | |_  \\_|  | |\n" +
-                "| |   |  _|      | |\n" +
-                "| |  _| |_       | |\n" +
-                "| | |_____|      | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| |    ______    | |\n" +
-                "| |  .' ___  |   | |\n" +
-                "| | / .'   \\_|   | |\n" +
-                "| | | |    ____  | |\n" +
-                "| | \\ `.___]  _| | |\n" +
-                "| |  `._____.'   | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| |  ____  ____  | |\n" +
-                "| | |_   ||   _| | |\n" +
-                "| |   | |__| |   | |\n" +
-                "| |   |  __  |   | |\n" +
-                "| |  _| |  | |_  | |\n" +
-                "| | |____||____| | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| |     _____    | |\n" +
-                "| |    |_   _|   | |\n" +
-                "| |      | |     | |\n" +
-                "| |      | |     | |\n" +
-                "| |     _| |_    | |\n" +
-                "| |    |_____|   | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| |     _____    | |\n" +
-                "| |    |_   _|   | |\n" +
-                "| |      | |     | |\n" +
-                "| |   _  | |     | |\n" +
-                "| |  | |_' |     | |\n" +
-                "| |  `.___.'     | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| |  ___  ____   | |\n" +
-                "| | |_  ||_  _|  | |\n" +
-                "| |   | |_/ /    | |\n" +
-                "| |   |  __'.    | |\n" +
-                "| |  _| |  \\ \\_  | |\n" +
-                "| | |____||____| | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| |   _____      | |\n" +
-                "| |  |_   _|     | |\n" +
-                "| |    | |       | |\n" +
-                "| |    | |   _   | |\n" +
-                "| |   _| |__/ |  | |\n" +
-                "| |  |________|  | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| | ____    ____ | |\n" +
-                "| ||_   \\  /   _|| |\n" +
-                "| |  |   \\/   |  | |\n" +
-                "| |  | |\\  /| |  | |\n" +
-                "| | _| |_\\/_| |_ | |\n" +
-                "| ||_____||_____|| |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .-----------------.\n" +
-                "| .--------------. |\n" +
-                "| | ____  _____  | |\n" +
-                "| ||_   \\|_   _| | |\n" +
-                "| |  |   \\ | |   | |\n" +
-                "| |  | |\\ \\| |   | |\n" +
-                "| | _| |_\\   |_  | |\n" +
-                "| ||_____|\\____| | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| |     ____     | |\n" +
-                "| |   .'    `.   | |\n" +
-                "| |  /  .--.  \\  | |\n" +
-                "| |  | |    | |  | |\n" +
-                "| |  \\  `--'  /  | |\n" +
-                "| |   `.____.'   | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| |   ______     | |\n" +
-                "| |  |_   __ \\   | |\n" +
-                "| |    | |__) |  | |\n" +
-                "| |    |  ___/   | |\n" +
-                "| |   _| |_      | |\n" +
-                "| |  |_____|     | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| |    ___       | |\n" +
-                "| |  .'   '.     | |\n" +
-                "| | /  .-.  \\    | |\n" +
-                "| | | |   | |    | |\n" +
-                "| | \\  `-'  \\_   | |\n" +
-                "| |  `.___.\\__|  | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| |  _______     | |\n" +
-                "| | |_   __ \\    | |\n" +
-                "| |   | |__) |   | |\n" +
-                "| |   |  __ /    | |\n" +
-                "| |  _| |  \\ \\_  | |\n" +
-                "| | |____| |___| | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| |    _______   | |\n" +
-                "| |   /  ___  |  | |\n" +
-                "| |  |  (__ \\_|  | |\n" +
-                "| |   '.___`-.   | |\n" +
-                "| |  |`\\____) |  | |\n" +
-                "| |  |_______.'  | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| |  _________   | |\n" +
-                "| | |  _   _  |  | |\n" +
-                "| | |_/ | | \\_|  | |\n" +
-                "| |     | |      | |\n" +
-                "| |    _| |_     | |\n" +
-                "| |   |_____|    | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| | _____  _____ | |\n" +
-                "| ||_   _||_   _|| |\n" +
-                "| |  | |    | |  | |\n" +
-                "| |  | '    ' |  | |\n" +
-                "| |   \\ `--' /   | |\n" +
-                "| |    `.__.'    | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| | ____   ____  | |\n" +
-                "| ||_  _| |_  _| | |\n" +
-                "| |  \\ \\   / /   | |\n" +
-                "| |   \\ \\ / /    | |\n" +
-                "| |    \\ ' /     | |\n" +
-                "| |     \\_/      | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| | _____  _____ | |\n" +
-                "| ||_   _||_   _|| |\n" +
-                "| |  | | /\\ | |  | |\n" +
-                "| |  | |/  \\| |  | |\n" +
-                "| |  |   /\\   |  | |\n" +
-                "| |  |__/  \\__|  | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| |  ____  ____  | |\n" +
-                "| | |_  _||_  _| | |\n" +
-                "| |   \\ \\  / /   | |\n" +
-                "| |    > `' <    | |\n" +
-                "| |  _/ /'`\\ \\_  | |\n" +
-                "| | |____||____| | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| |  ____  ____  | |\n" +
-                "| | |_  _||_  _| | |\n" +
-                "| |   \\ \\  / /   | |\n" +
-                "| |    \\ \\/ /    | |\n" +
-                "| |    _|  |_    | |\n" +
-                "| |   |______|   | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' "," .----------------. \n" +
-                "| .--------------. |\n" +
-                "| |   ________   | |\n" +
-                "| |  |  __   _|  | |\n" +
-                "| |  |_/  / /    | |\n" +
-                "| |     .'.' _   | |\n" +
-                "| |   _/ /__/ |  | |\n" +
-                "| |  |________|  | |\n" +
-                "| |              | |\n" +
-                "| '--------------' |\n" +
-                " '----------------' ",
+                """
+ .----------------.\s
+| .--------------. |
+| |   ______     | |
+| |  |_   _ \\    | |
+| |    | |_) |   | |
+| |    |  __'.   | |
+| |   _| |__) |  | |
+| |  |_______/   | |
+| |              | |
+| '--------------' |
+ '----------------'\s""",
+                """
+ .----------------.\s
+| .--------------. |
+| |     ______   | |
+| |   .' ___  |  | |
+| |  / .'   \\_|  | |
+| |  | |         | |
+| |  \\ `.___.'\\  | |
+| |   `._____.'  | |
+| |              | |
+| '--------------' |
+ '----------------'\s""",
+                """
+ .----------------.\s
+| .--------------. |
+| |  ________    | |
+| | |_   ___ `.  | |
+| |   | |   `. \\ | |
+| |   | |    | | | |
+| |  _| |___.' / | |
+| | |________.'  | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| |  _________   | |
+| | |_   ___  |  | |
+| |   | |_  \\_|  | |
+| |   |  _|  _   | |
+| |  _| |___/ |  | |
+| | |_________|  | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| |  _________   | |
+| | |_   ___  |  | |
+| |   | |_  \\_|  | |
+| |   |  _|      | |
+| |  _| |_       | |
+| | |_____|      | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| |    ______    | |
+| |  .' ___  |   | |
+| | / .'   \\_|   | |
+| | | |    ____  | |
+| | \\ `.___]  _| | |
+| |  `._____.'   | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| |  ____  ____  | |
+| | |_   ||   _| | |
+| |   | |__| |   | |
+| |   |  __  |   | |
+| |  _| |  | |_  | |
+| | |____||____| | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| |     _____    | |
+| |    |_   _|   | |
+| |      | |     | |
+| |      | |     | |
+| |     _| |_    | |
+| |    |_____|   | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| |     _____    | |
+| |    |_   _|   | |
+| |      | |     | |
+| |   _  | |     | |
+| |  | |_' |     | |
+| |  `.___.'     | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| |  ___  ____   | |
+| | |_  ||_  _|  | |
+| |   | |_/ /    | |
+| |   |  __'.    | |
+| |  _| |  \\ \\_  | |
+| | |____||____| | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| |   _____      | |
+| |  |_   _|     | |
+| |    | |       | |
+| |    | |   _   | |
+| |   _| |__/ |  | |
+| |  |________|  | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| | ____    ____ | |
+| ||_   \\  /   _|| |
+| |  |   \\/   |  | |
+| |  | |\\  /| |  | |
+| | _| |_\\/_| |_ | |
+| ||_____||_____|| |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .-----------------.
+| .--------------. |
+| | ____  _____  | |
+| ||_   \\|_   _| | |
+| |  |   \\ | |   | |
+| |  | |\\ \\| |   | |
+| | _| |_\\   |_  | |
+| ||_____|\\____| | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| |     ____     | |
+| |   .'    `.   | |
+| |  /  .--.  \\  | |
+| |  | |    | |  | |
+| |  \\  `--'  /  | |
+| |   `.____.'   | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| |   ______     | |
+| |  |_   __ \\   | |
+| |    | |__) |  | |
+| |    |  ___/   | |
+| |   _| |_      | |
+| |  |_____|     | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| |    ___       | |
+| |  .'   '.     | |
+| | /  .-.  \\    | |
+| | | |   | |    | |
+| | \\  `-'  \\_   | |
+| |  `.___.\\__|  | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| |  _______     | |
+| | |_   __ \\    | |
+| |   | |__) |   | |
+| |   |  __ /    | |
+| |  _| |  \\ \\_  | |
+| | |____| |___| | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| |    _______   | |
+| |   /  ___  |  | |
+| |  |  (__ \\_|  | |
+| |   '.___`-.   | |
+| |  |`\\____) |  | |
+| |  |_______.'  | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| |  _________   | |
+| | |  _   _  |  | |
+| | |_/ | | \\_|  | |
+| |     | |      | |
+| |    _| |_     | |
+| |   |_____|    | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| | _____  _____ | |
+| ||_   _||_   _|| |
+| |  | |    | |  | |
+| |  | '    ' |  | |
+| |   \\ `--' /   | |
+| |    `.__.'    | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| | ____   ____  | |
+| ||_  _| |_  _| | |
+| |  \\ \\   / /   | |
+| |   \\ \\ / /    | |
+| |    \\ ' /     | |
+| |     \\_/      | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| | _____  _____ | |
+| ||_   _||_   _|| |
+| |  | | /\\ | |  | |
+| |  | |/  \\| |  | |
+| |  |   /\\   |  | |
+| |  |__/  \\__|  | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| |  ____  ____  | |
+| | |_  _||_  _| | |
+| |   \\ \\  / /   | |
+| |    > `' <    | |
+| |  _/ /'`\\ \\_  | |
+| | |____||____| | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| |  ____  ____  | |
+| | |_  _||_  _| | |
+| |   \\ \\  / /   | |
+| |    \\ \\/ /    | |
+| |    _|  |_    | |
+| |   |______|   | |
+| |              | |
+| '--------------' |
+ '----------------'\s""", """
+ .----------------.\s
+| .--------------. |
+| |   ________   | |
+| |  |  __   _|  | |
+| |  |_/  / /    | |
+| |     .'.' _   | |
+| |   _/ /__/ |  | |
+| |  |________|  | |
+| |              | |
+| '--------------' |
+ '----------------'\s""",
                 """
 .----------------.s
 | .--------------. |
