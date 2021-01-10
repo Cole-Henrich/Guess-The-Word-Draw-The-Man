@@ -24,230 +24,275 @@ public class Main {
         char[] uppercase = {
                 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
         };
+//            p("skip?");
+//            Scanner s0101 = new Scanner(System.in);
+//            String userInput0101 = s0101.next();
+//            boolean printAll = true;
+//            if (userInput0101.equalsIgnoreCase("skip")) {
+//                printAll = false;
+//            }
+//            if (printAll) {
+                p("Hello! Welcome to 'draw-the-man' - a computerized edition of the classic Hang-Man!\n" +
+                        "Are you familiar with the premise of the game?");
+                Scanner s = new Scanner(System.in);
+                String isFamiliar = s.next();
+                if (isFamiliar.contains("n")) {
+                    p("No problem! Here is the premise of the game:");
+                    //Thread.sleep(5000);
+                    p(" One player tries to guess the other player's secret word.");
+                    //Thread.sleep(5000);
+                    p(" One player will mentally decide on a word they know that they think is unique, and let the other player know when the word has been chosen.");
+                    //Thread.sleep(5000);
+                    p(" The screen will display a series of blanks:");
+                    //Thread.sleep(2000);
+                    p("    ________    ________    ________    ________    ________    ________    ________   ________    ________    ________    ________ ");
+                    //Thread.sleep(3000);
+                    p("  Corresponding to the length of the word. There are 12 blanks above, meaning our example secret word has 12 letters.");
+                    //Thread.sleep(5000);
+                    p(" For example, the word could be 'polynomial' or 'rhinoceros', or ANY 12 letter word.");
+                    //Thread.sleep(6000);
+                    p(" The guessing player will then guess a letter. If the secret word contains the letter, the system will then fill in every occurrence of the letter.");
+                    //Thread.sleep(5000);
+                    p(" For example, if the guessing player entered 'o' and the word was 'rhinoceros', the blanks would fill in this way:");
+                    //Thread.sleep(6000);
+                    p(" _ _ _ _ o _ _ _ o _");
+                    //Thread.sleep(3000);
+                    p(" if the secret word does not contain the letter guessed, the letter will be entered into a word bank of incorrect letters, and the program will start to draw a figure.");
+                    //Thread.sleep(6000);
+                    p(" For every incorrect letter guessed, the program will draw another part of the figure.");
+                    //Thread.sleep(5000);
+                    p(" After 12 incorrect guesses, the figure becomes fully drawn; the guesser loses and the answerer reveals the word.");
+                    //Thread.sleep(5000);
+                    p(" In usual hangman, the figure would be a man being hanged. However, this is not your average hangman game!");
+                    //Thread.sleep(5000);
+                }
 
-            p("Hello! Welcome to 'draw-the-man' - a computerized edition of the classic Hang-Man!\n" +
-                    "Are you familiar with the premise of the game?");
-            Scanner s = new Scanner(System.in);
-            String isFamiliar = s.next();
-            if (isFamiliar.contains("n")) {
-                p("No problem! Here is the premise of the game:");
-                //Thread.sleep(5000);
-                p(" One player tries to guess the other player's secret word.");
-                //Thread.sleep(5000);
-                p(" One player will mentally decide on a word they know that they think is unique, and let the other player know when the word has been chosen.");
-                //Thread.sleep(5000);
-                p(" The screen will display a series of blanks:");
-                //Thread.sleep(2000);
-                p("    ________    ________    ________    ________    ________    ________    ________   ________    ________    ________    ________ ");
-                //Thread.sleep(3000);
-                p("  Corresponding to the length of the word. There are 12 blanks above, meaning our example secret word has 12 letters.");
-                //Thread.sleep(5000);
-                p(" For example, the word could be 'polynomial' or 'rhinoceros', or ANY 12 letter word.");
-                //Thread.sleep(6000);
-                p(" The guessing player will then guess a letter. If the secret word contains the letter, the system will then fill in every occurrence of the letter.");
-                //Thread.sleep(5000);
-                p(" For example, if the guessing player entered 'o' and the word was 'rhinoceros', the blanks would fill in this way:");
-                //Thread.sleep(6000);
-                p(" _ _ _ _ o _ _ _ o _");
-                //Thread.sleep(3000);
-                p(" if the secret word does not contain the letter guessed, the letter will be entered into a word bank of incorrect letters, and the program will start to draw a figure.");
-                //Thread.sleep(6000);
-                p(" For every incorrect letter guessed, the program will draw another part of the figure.");
-                //Thread.sleep(5000);
-                p(" After 12 incorrect guesses, the figure becomes fully drawn; the guesser loses and the answerer reveals the word.");
-                //Thread.sleep(5000);
-                p(" In usual hangman, the figure would be a man being hanged. However, this is not your average hangman game!");
-                //Thread.sleep(5000);
-            }
-
-            if (isFamiliar.contains("y")) p("Great!");
-            p("Would you like to play in regular mode:");
-            //Thread.sleep(1000);
-            p(" _ _ _ _ _ _ _ _ _ _");
-            //Thread.sleep(500);
-            p("""
-                                    
-                    R H I N O C E R O S\s
-                    _ _ _ _ _ _ _ _ _ _
-                                    
-                    """);
-            //Thread.sleep(1000);
-            p("Or would you like to play in ASCII Art Mode:");
-            //Thread.sleep(1000);
-            getasciiDemo();
-            //Thread.sleep(1000);
-
-
-            p("""
-                    The game is set to ASCII Art Mode by default. If you prefer regular, type 'regular'.
-                    If you prefer ascii, type anything other than regular.
-                    Then hit enter.
-                                 
-                    """);
-            Scanner s3 = new Scanner(System.in);
-            String userInput3 = s3.next();
-            if (userInput3.contains("reg") || userInput3.contains("norm")) isASCII = false;
-
-            p("""
-                    Do you want to play solo, or with another person?
-                    Type '1' or 'solo'
-                    or Type '2' or 'two-player'
-                    """);
-            Scanner s4 = new Scanner(System.in);
-            String userInput4 = s4.next();
-            if (userInput4.equals("1") || userInput4.contains("lo")) {
-                isTwoPlayers = false;
-            } else {
-                isTwoPlayers = true;
-            }
-            if (isTwoPlayers) {
+                if (isFamiliar.contains("y")) p("Great!");
+                p("Would you like to play in regular mode:");
+                //Thread.sleep(1000);
+                p(" _ _ _ _ _ _ _ _ _ _");
+                //Thread.sleep(500);
                 p("""
-                        Will you create the word - player 1
-                        or will you guess the word - player 2?
-                        Type '1' or '2' 
+                                        
+                        R H I N O C E R O S\s
+                        _ _ _ _ _ _ _ _ _ _
+                                        
                         """);
-                Scanner s5 = new Scanner(System.in);
-                String userInput5 = s5.next();
-                if (userInput5.equals("1")) {
-                    for (int i = 0; i < 2; i++) {
-                        ArrayList<String> playerPronouns = new ArrayList<>();
-                        String player = "";
-                        String otherplayer = "";
-                        p("""
-                                Hello! Thanks so much for playing!
-                                What would you like your name to be?
-                                """);
-                        Scanner s6 = new Scanner(System.in);
-                        String userInput6 = s6.next();
-                        player = userInput6;
-                        p("""
-                                What would you like your pronouns to be? 
-                                                
-                                First, type how you would like to be referred to as a grammatical subject, for example, "they".
-                                Next, type how you would like to be referred to as an grammatical object, for example, "them".
-                                Finally, type how you would like to be referred to in the possessive, for example, "their(s)".
-                                                
-                                After each pronoun, press enter.
-                                """);
-                        p("subject:");
-                        Scanner input_0 = new Scanner(System.in);
-                        String pronoun_0 = input_0.next();
-                        playerPronouns.add(pronoun_0);
-                        p("object:");
-                        Scanner input_1 = new Scanner(System.in);
-                        String pronoun_1 = input_1.next();
-                        playerPronouns.add(pronoun_1);
-                        p("possessive:");
-                        Scanner input_2 = new Scanner(System.in);
-                        String pronoun_2 = input_2.next();
-                        playerPronouns.add(pronoun_2);
-                        p("Thanks, " + player + "! Now let your partner have a seat at the computer!");
-                        if (i == 0) {
-                            playerOneName = player;
-                            playerOnePronouns = playerPronouns;
+                //Thread.sleep(1000);
+                p("Or would you like to play in ASCII Art Mode:");
+                //Thread.sleep(1000);
+                getasciiDemo();
+                //Thread.sleep(1000);
+
+
+                p("""
+                        The game is set to ASCII Art Mode by default. If you prefer regular, type 'regular'.
+                        If you prefer ascii, type anything other than regular.
+                        Then hit enter.
+                                     
+                        """);
+                Scanner s3 = new Scanner(System.in);
+                String userInput3 = s3.next();
+                if (userInput3.contains("reg") || userInput3.contains("norm")) isASCII = false;
+
+                p("""
+                        Do you want to play solo, or with another person?
+                        Type '1' or 'solo'
+                        or Type '2' or 'two-player'
+                        """);
+                Scanner s4 = new Scanner(System.in);
+                String userInput4 = s4.next();
+                isTwoPlayers = !userInput4.equals("1") && !userInput4.contains("lo");
+                if (isTwoPlayers) {
+                    p("""
+                            Will you create the word - player 1
+                            or will you guess the word - player 2?
+                            Type '1' or '2'. The creator should sit down first. 
+                            """);
+                    Scanner s5 = new Scanner(System.in);
+                    String userInput5 = s5.next();
+                        for (int i = 0; i < 2; i++) {
+                            ArrayList<String> playerPronouns = new ArrayList<>();
+                            String player;
+                            player = getName();
+                            getPronouns(playerPronouns);
+                            p("Thanks, " + player + "! Now let your partner have a seat at the computer!");
+                            if (i == 0) {
+                                playerOneName = player;
+                                playerOnePronouns = playerPronouns;
+                            }
+                            if (i == 1) {
+                                playerTwoName = player;
+                                playerTwoPronouns = playerPronouns;
+                            }
                         }
-                        if (i == 1) {
-                            playerTwoName = player;
-                            playerTwoPronouns = playerPronouns;
+                        p(playerOnePronouns);
+                        p(playerTwoPronouns);
+                        p("Thanks, " + playerTwoName + "! Okay, now turn your back! Tell " + playerOneName + " it's time to devise a brain-boggler of a word!");
+
+                    //  }
+//            else {
+//                playerOneName = "friend!";
+//                playerTwoName = "friend!";
+//                for (int i = 0; i < 4 ; i++) {
+//                    playerOnePronouns.add("null");
+//                    playerTwoPronouns.add("null");
+//                }
+//            }
+
+                    boolean wantsToPlay = true;
+                    while (wantsToPlay) {
+                        p("Welcome back, " + playerOneName + "! Enter your word whenever you are ready.");
+
+                        System.out.flush();
+                        Scanner s10 = new Scanner(System.in);
+                        String word = s10.next();
+                        p(word.length());
+                        for (int i = 0; i < word.length(); i++) {
+                            char c = word.charAt(i);
+                            for (int j = 0; j < lowercase.length; j++) {
+                                char smallChar = lowercase[j];
+
+                                char bigChar = uppercase[j];
+                                if (c == smallChar) c = bigChar;
+                            }
+                            allCaps.append(c);
+                        }
+                        for (int i = 0; i < allCaps.length(); i++) {
+                            char c = allCaps.charAt(i);
+                            for (int j = 0; j < uppercase.length; j++) {
+                                char bigChar = uppercase[j];
+                                String ASCIIblock = getASCIIalphabet()[j];
+                                if (c == bigChar) ASCIIword.append(ASCIIblock);
+                            }
+                        }
+                        p(ASCIIword);
+                        p("Nice word! That'll perplex " + playerTwoName + " for sure! Let " + playerTwoPronouns.get(1) + " know that " + playerTwoPronouns.get(0) + " can come back and start guessing...OOH, THIS WILL BE GOOD!");
+                        p("Hello " + playerTwoName + "! Enter the first letter you are guessing, whenever you are ready.");
+                        ArrayList<String> progressOnWord = new ArrayList<>();
+                        ArrayList<String> ASCIIform = new ArrayList<>();
+                        for (int i = 0; i < word.length(); i++) {
+                            progressOnWord.add("0");
+                            ASCIIform.add("0");
+                        }
+                        int numberCorrect = 0;
+                        int numberWrong = 0;
+                        String[] ASCIIalphabet = getASCIIalphabet();
+                        String ASCIIblank = ASCIIalphabet[26];
+                        String[] drawing = getDrawing();
+
+                        for (int i = 0; i < 26; i++) {
+                            p("Please enter the letter:");
+                            Scanner sc = new Scanner(System.in);
+                            String guess = sc.next();
+                            int count = 0;
+                            count = word.length() - word.replace(guess, "").length();
+                            if (word.contains(guess)) {
+                                for (int location = 0; location < word.length(); location++) {
+                                    String letter = String.valueOf(word.charAt(location));
+                                    if (letter.equalsIgnoreCase(guess)) {
+                                        progressOnWord.set(location, guess);
+                                    }
+                                }
+                                numberCorrect += count;
+                                p(numberCorrect);
+                            }
+
+                            for (int j = 0; j < progressOnWord.size(); j++) {
+                                String wordPlace = progressOnWord.get(j);
+                                if (wordPlace.equals("0")) {
+                                    ASCIIform.set(j, ASCIIblank);
+                                }
+                                /*
+                                above, as 0 is the placeholder, when 0 is encountered,
+                                 it is replaced with an ASCII Block Blank:
+                                                 '----------------'
+                                                | .--------------. |
+                                                | |              | |
+                                                | |              | |
+                                                | |              | |
+                                                | |              | |
+                                                | |              | |
+                                                | |              | |
+                                                | |              | |
+                                                | '--------------' |
+                                                 '----------------'\, .-
+                                 */
+
+                                for (int k = 0; k < lowercase.length; k++) {
+                                    String letter = String.valueOf(lowercase[k]);
+                                    String ASCIIletter = ASCIIalphabet[k];
+                                    if (wordPlace.equalsIgnoreCase(letter)) {
+                                        ASCIIform.set(j, ASCIIletter);
+                                    }
+                                }
+                                /*
+                                 * The code above iterates through an alphabet,
+                                 * *within* the loop that is iterating
+                                 * through each character in the word.
+                                 * for example, with "rhinoceros":
+                                 * if the progress is rh00o00ro0,
+                                 * it checks if r is 0. No.
+                                 * It then moves on to iterate through a, b, c...z,
+                                 * until it finds r.
+                                 * when it finds r in the alphabet,
+                                 * it notes that r is in spot 0 in the progress,
+                                 * and notes that r is the 18th letter in the alphabet
+                                 * and proceeds to set spot 0 in the ASCII word to
+                                 * the 18th String in the ASCII Block Alphabet:
+                                 *
+                                                [ .----------------.
+                                                | .--------------. |
+                                                | |  _______     | |
+                                                | | |_   __ \    | |
+                                                | |   | |__) |   | |
+                                                | |   |  __ /    | |
+                                                | |  _| |  \ \_  | |
+                                                | | |____| |___| | |
+                                                | |              | |
+                                                | '--------------' |
+                                                 '----------------' ,
+                                 */
+                            }
+
+                            if (!word.contains(guess)) {
+                                numberWrong++;
+                                p(drawing[numberWrong]);
+                            }
+                            if (numberWrong >= (drawing.length - 1) || numberCorrect >= word.length()) {
+                                p("Good game! Would you like to play again?");
+                                Scanner s00 = new Scanner(System.in);
+                                String willPlay = s00.next();
+                                if (willPlay.contains("y")) {
+                                    wantsToPlay = true;
+                                }
+                                if (willPlay.contains("n")) {
+                                    p("Okay, thanks for playing! Bring back someone else to play with!");
+                                    wantsToPlay = false;
+                                }
+                                break;
+                            }
                         }
                     }
-                    p(playerOnePronouns);
-                    p(playerTwoPronouns);
-                    p("Thanks, " + playerTwoName + "! Okay, now turn your back! Tell " + playerOneName + " it's time to devise a brain-boggler of a word!");
+                }
+                if (!isTwoPlayers) {
+                    getDictionaryPrompts();
+                    ArrayList<ArrayList<String>>Dictionaries = getListofDictionaries();
+                    Scanner s0001 = new Scanner(System.in);
+                    String userInput0001 = s0001.next();
+                    int parsedInput = Integer.parseInt(userInput0001);
+                    ArrayList<String>Dictionary = Dictionaries.get(parsedInput);
+                    int random = (int) (Math.random() * Dictionary.size());
+                    p(Dictionary.get(random));
+                }
                 }
 
-                Thread.sleep(2000);
-                boolean wantsToPlay = true;
-                while (wantsToPlay) {
-                    p("Welcome back, " + playerOneName + "! Enter your word whenever you are ready.");
-                    System.out.flush();
-                    Scanner s10 = new Scanner(System.in);
-                    String word = s10.next();
-                    p(word.length());
-                    for (int i = 0; i < word.length(); i++) {
-                        char c = word.charAt(i);
-                        for (int j = 0; j < lowercase.length; j++) {
-                            char smallChar = lowercase[j];
-                            char bigChar = uppercase[j];
-                            if (c == smallChar) c = bigChar;
-                        }
-                        allCaps.append(c);
-                    }
-                    for (int i = 0; i < allCaps.length(); i++) {
-                        char c = allCaps.charAt(i);
-                        for (int j = 0; j < uppercase.length; j++) {
-                            char bigChar = uppercase[j];
-                            String ASCIIblock = getASCIIalphabet()[j];
-                            if (c == bigChar) ASCIIword.append(ASCIIblock);
-                        }
-                    }
-                    p(ASCIIword);
-                    p("Nice word! That'll perplex " + playerTwoName + " for sure! Let " + playerTwoPronouns.get(1) + " know that " + playerTwoPronouns.get(0) + " can come back and start guessing...OOH, THIS WILL BE GOOD!");
-                    p("Hello " + playerTwoName + "! Enter the first letter you are guessing, whenever you are ready.");
-                    ArrayList<String> progressOnWord = new ArrayList<>();
-                    ArrayList<String> ASCIIform = new ArrayList<>();
-                    for (int i = 0; i < word.length(); i++) {
-                        progressOnWord.add("0");
-                        ASCIIform.add("0");
-                    }
-                    int numberCorrect = 0;
-                    int numberWrong = 0;
-                    String[] ASCIIalphabet = getASCIIalphabet();
-                    String ASCIIblank = ASCIIalphabet[26];
-                    String[] drawing = getDrawing();
 
-                    for (int i = 0; i < 26; i++) {
-                        p("Please enter the letter:");
-                        Scanner sc = new Scanner(System.in);
-                        String guess = sc.next();
-                        int count = 0;
-                        count = word.length() - word.replace("guess", "").length();
-                        if (count > 0) {
-                            for (int location = 0; location < word.length(); location++) {
-                                String letter = String.valueOf(word.charAt(location));
-                                if (letter.equalsIgnoreCase(guess)) {
-                                    progressOnWord.set(location, guess);
-                                }
-                            }
-                            numberCorrect += count;
-                            p(numberCorrect);
-                        }
-
-                        for (int j = 0; j < progressOnWord.size(); j++) {
-                            String wordPlace = progressOnWord.get(j);
-                            if (wordPlace.equals("0")) {
-                                ASCIIform.set(j, ASCIIblank);
-                            }
-                            for (int k = 0; k < lowercase.length; k++) {
-                                String letter = String.valueOf(lowercase[k]);
-                                String ASCIIletter = ASCIIalphabet[k];
-                                if (wordPlace.equalsIgnoreCase(letter)) {
-                                    ASCIIform.set(j, ASCIIletter);
-                                }
-                            }
-                        }
-                        p(ASCIIform);
-                        if (!word.contains(guess)) {
-                            numberWrong++;
-                            p(drawing[numberWrong]);
-                        }
-                        if (numberWrong == (drawing.length - 1) || numberCorrect == word.length()) {
-                            p("Good game! Would you like to play again?");
-                            Scanner s00 = new Scanner(System.in);
-                            String willPlay = s00.next();
-                            if (willPlay.contains("y")) {
-                                wantsToPlay = true;
-                            }
-                            if (willPlay.contains("n")) {
-                                wantsToPlay = false;
-                            }
-                            break;
-                        }
-                    }
-                }
-        }
-    }
-public static ArrayList<String> getDictionary() throws FileNotFoundException {
+    /**
+     * prints all the System prompts regarding Dictionary selection for a solo-player
+     * @throws FileNotFoundException
+     */
+    private static void getDictionaryPrompts() throws FileNotFoundException {
     int Gatsbycount = 0;
     ArrayList<String> Gatsbyuniquewords = new ArrayList<>();
     File Gatsby = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/dictionary.txt");
@@ -275,13 +320,13 @@ public static ArrayList<String> getDictionary() throws FileNotFoundException {
         String JungleBookDictionaryWord = scanner02.next();
         p(JungleBookDictionaryWord);
         if (JungleBookDictionaryWord.length() >= 8) {
-                if (!JungleBookDictionaryWord.contains("-")) {
-                    JungleBookDictionaryWord = repeatedReplace(JungleBookDictionaryWord);
-                    if (!JungleBookuniquewords.contains(JungleBookDictionaryWord)) {
-                        JungleBookuniquewords.add(JungleBookDictionaryWord);
-                        JungleBookcount++;
-                    }
+            if (!JungleBookDictionaryWord.contains("-")) {
+                JungleBookDictionaryWord = repeatedReplace(JungleBookDictionaryWord);
+                if (!JungleBookuniquewords.contains(JungleBookDictionaryWord)) {
+                    JungleBookuniquewords.add(JungleBookDictionaryWord);
+                    JungleBookcount++;
                 }
+            }
         }
     }
     p(JungleBookuniquewords);
@@ -295,13 +340,13 @@ public static ArrayList<String> getDictionary() throws FileNotFoundException {
         String FullDictionaryDictionaryWord = scanner03.next();
         p(FullDictionaryDictionaryWord);
         if (FullDictionaryDictionaryWord.length() >= 8) {
-                if (!FullDictionaryDictionaryWord.contains("-")) {
-                    FullDictionaryDictionaryWord = repeatedReplace(FullDictionaryDictionaryWord);
-                    if (!FullDictionaryuniquewords.contains(FullDictionaryDictionaryWord)) {
-                        FullDictionaryuniquewords.add(FullDictionaryDictionaryWord);
-                        FullDictionarycount++;
-                    }
+            if (!FullDictionaryDictionaryWord.contains("-")) {
+                FullDictionaryDictionaryWord = repeatedReplace(FullDictionaryDictionaryWord);
+                if (!FullDictionaryuniquewords.contains(FullDictionaryDictionaryWord)) {
+                    FullDictionaryuniquewords.add(FullDictionaryDictionaryWord);
+                    FullDictionarycount++;
                 }
+            }
         }
     }
     p(FullDictionaryuniquewords);
@@ -311,46 +356,32 @@ public static ArrayList<String> getDictionary() throws FileNotFoundException {
             Plus, we've got thousands of words so you can play for hours on end.
             A word will be generated for you to guess. You can pick which dictionary it comes from: 
             ------The Gatsby Dictionary-----
-            
+                        
             The Gatsby Dictionary is composed of all the unique words over 9 letters occurring in the Great Gatsby.
             __________________________________
             """);
     p("If you choose the Gatsby Dictionary, your word can be one of " + Gatsbycount + " words. Wow, that's a lot!");
 
-p("""
-        ________The Jungle Book Dictionary----------
-        
-        Composed of all the unique words over 7 letters occurring in The Jungle Book. Rudyard Kipling likes short words!
-        ______________________________________________
-        """);
+    p("""
+            ________The Jungle Book Dictionary----------
+                    
+            Composed of all the unique words over 7 letters occurring in The Jungle Book. Rudyard Kipling likes short words!
+            ______________________________________________
+            """);
     p("If you choose the Jungle Book Dictionary, your word can be one of " + JungleBookcount + " words. Wow, that's a lot!");
-p("""
-        Finally, you can combine the two into one BIG MAMA DICTIONARY!!!
-        
-        """);
-p("If you choose the BIG MAMA DICTIONARY, your word can be one of " + FullDictionarycount + " words. Wow...that is REALLY a lot!");
+    p("""
+            Finally, you can combine the two into one BIG MAMA DICTIONARY!!!
+                    
+            """);
+    p("If you choose the BIG MAMA DICTIONARY, your word can be one of " + FullDictionarycount + " words. Wow...that is REALLY a lot!");
 
-p("""
-        So! You've seen the choices! Which do you choose? 
-        Enter: 
-        0 for the Great Gatsby Dictionary
-        1 for the Jungle Book Dictionary
-        2 for the BIG MAMA DICTIONARY!!!!!
-        """);
-ArrayList<String>Dictionary = new ArrayList<>();
-Scanner s0001 = new Scanner(System.in);
-String userInput0001 = s0001.next();
-
-    if (userInput0001.equals("0")) {
-        Dictionary = Gatsbyuniquewords;
-    }
-    if (userInput0001.equals("1")) {
-        Dictionary = JungleBookuniquewords;
-    }
-    if (userInput0001.equals("2")) {
-        Dictionary = FullDictionaryuniquewords;
-    }
-    return Dictionary;
+    p("""
+            So! You've seen the choices! Which do you choose? 
+            Enter: 
+            0 for the Great Gatsby Dictionary
+            1 for the Jungle Book Dictionary
+            2 for the BIG MAMA DICTIONARY!!!!!
+            """);
 }
 
     /**
@@ -1276,5 +1307,114 @@ public static void getasciiDemo() throws InterruptedException {
         };
         return drawing;
     }
-}
 
+    /**
+     *
+     * @param playerPronouns the ArrayList of pronouns to be modified, either 1's pronouns or 2's pronouns.
+     *
+     */
+    private static void getPronouns(ArrayList<String>playerPronouns) {
+
+        p("""
+                                    What would you like your pronouns to be? 
+                                                    
+                                    First, type how you would like to be referred to as a grammatical subject, for example, "they".
+                                    Next, type how you would like to be referred to as an grammatical object, for example, "them".
+                                    Finally, type how you would like to be referred to in the possessive, for example, "their(s)".
+                                                    
+                                    After each pronoun, press enter.
+                                    """);
+        p("subject:");
+        Scanner input_0 = new Scanner(System.in);
+        String pronoun_0 = input_0.next();
+        playerPronouns.add(pronoun_0);
+        p("object:");
+        Scanner input_1 = new Scanner(System.in);
+        String pronoun_1 = input_1.next();
+        playerPronouns.add(pronoun_1);
+        p("possessive:");
+        Scanner input_2 = new Scanner(System.in);
+        String pronoun_2 = input_2.next();
+        playerPronouns.add(pronoun_2);
+    }
+
+    /**
+     *
+     * @return the userInput name
+     */
+    private static String getName(){
+        p("""
+                                    Hello! Thanks so much for playing!
+                                    What would you like your name to be?
+                                    """);
+        Scanner s6 = new Scanner(System.in);
+        return s6.next();
+    }
+//    ArrayList<ArrayList<String>> listofDictionaries = new ArrayList<>(Arrays.asList(
+//
+//            )
+//            );
+//    private String randomWord(int dictionaryNumber) throws FileNotFoundException {
+//    }
+
+    /**
+     *
+     * @return the ListofDictionaries, the ArrayList<ArrayList<String>> of all the dictionaries.
+     * @throws FileNotFoundException
+     */
+    public static ArrayList<ArrayList<String>> getListofDictionaries() throws FileNotFoundException {
+        ArrayList<ArrayList<String>> listofDictionaries = new ArrayList<>();
+        int Gatsbycount = 0;
+        ArrayList<String> Gatsbyuniquewords = new ArrayList<>();
+        File Gatsby = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/dictionary.txt");
+        Scanner scanner01 = new Scanner(Gatsby);
+        while (scanner01.hasNext()) {
+            String dictionaryWord = scanner01.next();
+            if (dictionaryWord.length() >= 10) {
+                if (!dictionaryWord.contains("-")) {
+                    dictionaryWord = repeatedReplace(dictionaryWord);
+                    if (!Gatsbyuniquewords.contains(dictionaryWord)) {
+                        Gatsbyuniquewords.add(dictionaryWord);
+                        Gatsbycount++;
+                    }
+                }
+            }
+        }
+        int JungleBookcount = 0;
+        ArrayList<String> JungleBookuniquewords = new ArrayList<>();
+        File JungleBook = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/JungleBook.txt");
+        Scanner scanner02 = new Scanner(JungleBook);
+        while (scanner02.hasNext()) {
+            String JungleBookDictionaryWord = scanner02.next();
+            if (JungleBookDictionaryWord.length() >= 8) {
+                if (!JungleBookDictionaryWord.contains("-")) {
+                    JungleBookDictionaryWord = repeatedReplace(JungleBookDictionaryWord);
+                    if (!JungleBookuniquewords.contains(JungleBookDictionaryWord)) {
+                        JungleBookuniquewords.add(JungleBookDictionaryWord);
+                        JungleBookcount++;
+                    }
+                }
+            }
+        }
+        int FullDictionarycount = 0;
+        ArrayList<String> FullDictionaryuniquewords = new ArrayList<>();
+        File FullDictionary = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/JungleBook+Gatsby.txt");
+        Scanner scanner03 = new Scanner(FullDictionary);
+        while (scanner03.hasNext()) {
+            String FullDictionaryDictionaryWord = scanner03.next();
+            if (FullDictionaryDictionaryWord.length() >= 8) {
+                if (!FullDictionaryDictionaryWord.contains("-")) {
+                    FullDictionaryDictionaryWord = repeatedReplace(FullDictionaryDictionaryWord);
+                    if (!FullDictionaryuniquewords.contains(FullDictionaryDictionaryWord)) {
+                        FullDictionaryuniquewords.add(FullDictionaryDictionaryWord);
+                        FullDictionarycount++;
+                    }
+                }
+            }
+        }
+        listofDictionaries.add(Gatsbyuniquewords);
+        listofDictionaries.add(JungleBookuniquewords);
+        listofDictionaries.add(FullDictionaryuniquewords);
+        return listofDictionaries;
+    }
+}
