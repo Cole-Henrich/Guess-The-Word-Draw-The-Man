@@ -3,6 +3,10 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Main {
+    static char[] lowercase = {
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+    };
+    static boolean wantsToPlay = true;
     //][\/][ //-\ ][_) ]E  ][3 ``//  //-\  // ] _) ]][ ((5 << ]][ ]]p ][_ ]E   [[]] ][=   ][\/][ //-\ ((5 `][` ]E ][2    ][3 ][2 ]][ //-\ ][\][   ((5 ]E //-\
     public static void main(String[] args) throws InterruptedException, FileNotFoundException {
 
@@ -18,9 +22,7 @@ public class Main {
         StringBuilder allCaps = new StringBuilder();
         StringBuilder ASCIIword = new StringBuilder();
         StringBuilder progress = new StringBuilder();
-        char[] lowercase = {
-                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
-        };
+
         char[] uppercase = {
                 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
         };
@@ -53,7 +55,6 @@ public class Main {
                     //Thread.sleep(6000);
                     p(" The guessing player will then guess a letter. If the secret word contains the letter, the system will then fill in every occurrence of the letter.");
                     //Thread.sleep(5000);
-                    p(" For example, if the guessing player entered 'o' and the word was 'rhinoceros', the blanks would fill in this way:");
                     //Thread.sleep(6000);
                     p(" _ _ _ _ o _ _ _ o _");
                     //Thread.sleep(3000);
@@ -140,7 +141,6 @@ public class Main {
 //                }
 //            }
 
-                    boolean wantsToPlay = true;
                     while (wantsToPlay) {
                         p("Welcome back, " + playerOneName + "! Enter your word whenever you are ready.");
 
@@ -168,7 +168,8 @@ public class Main {
                         }
                         p(ASCIIword);
                         p("Nice word! That'll perplex " + playerTwoName + " for sure! Let " + playerTwoPronouns.get(1) + " know that " + playerTwoPronouns.get(0) + " can come back and start guessing...OOH, THIS WILL BE GOOD!");
-                        p("Hello " + playerTwoName + "! Enter the first letter you are guessing, whenever you are ready.");
+                        guess(word,playerTwoName);
+                       /* p("Hello " + playerTwoName + "! Enter the first letter you are guessing, whenever you are ready.");
                         ArrayList<String> progressOnWord = new ArrayList<>();
                         ArrayList<String> ASCIIform = new ArrayList<>();
                         for (int i = 0; i < word.length(); i++) {
@@ -218,7 +219,7 @@ public class Main {
                                                 | '--------------' |
                                                  '----------------'\, .-
                                  */
-
+/*
                                 for (int k = 0; k < lowercase.length; k++) {
                                     String letter = String.valueOf(lowercase[k]);
                                     String ASCIIletter = ASCIIalphabet[k];
@@ -253,6 +254,7 @@ public class Main {
                                                 | '--------------' |
                                                  '----------------' ,
                                  */
+                        /*
                             }
 
                             if (!word.contains(guess)) {
@@ -273,7 +275,11 @@ public class Main {
                                 break;
                             }
                         }
+
+                         */
                     }
+
+
                 }
                 if (!isTwoPlayers) {
                     getDictionaryPrompts();
@@ -1416,5 +1422,118 @@ public static void getasciiDemo() throws InterruptedException {
         listofDictionaries.add(JungleBookuniquewords);
         listofDictionaries.add(FullDictionaryuniquewords);
         return listofDictionaries;
+    }
+
+    /**
+     * Runs the guess/check process in the ASCII style.
+     * @param word the word to process
+     * @param playerName the playerName to refer to the player as in dialogue.
+     */
+    private static void guess(String word, String playerName) {
+        p("Hello " + playerName + "! Enter the first letter you are guessing, whenever you are ready.");
+        ArrayList<String> progressOnWord = new ArrayList<>();
+        ArrayList<String> ASCIIform = new ArrayList<>();
+        for (int i = 0; i < word.length(); i++) {
+            progressOnWord.add("0");
+            ASCIIform.add("0");
+        }
+        int numberCorrect = 0;
+        int numberWrong = 0;
+        String[] ASCIIalphabet = getASCIIalphabet();
+        String ASCIIblank = ASCIIalphabet[26];
+        String[] drawing = getDrawing();
+
+        for (int i = 0; i < 26; i++) {
+            p("Please enter the letter:");
+            Scanner sc = new Scanner(System.in);
+            String guess = sc.next();
+            int count = 0;
+            count = word.length() - word.replace(guess, "").length();
+            if (word.contains(guess)) {
+                for (int location = 0; location < word.length(); location++) {
+                    String letter = String.valueOf(word.charAt(location));
+                    if (letter.equalsIgnoreCase(guess)) {
+                        progressOnWord.set(location, guess);
+                    }
+                }
+                numberCorrect += count;
+                p(numberCorrect);
+            }
+
+            for (int j = 0; j < progressOnWord.size(); j++) {
+                String wordPlace = progressOnWord.get(j);
+                if (wordPlace.equals("0")) {
+                    ASCIIform.set(j, ASCIIblank);
+                }
+                                /*
+                                above, as 0 is the placeholder, when 0 is encountered,
+                                 it is replaced with an ASCII Block Blank:
+                                                 '----------------'
+                                                | .--------------. |
+                                                | |              | |
+                                                | |              | |
+                                                | |              | |
+                                                | |              | |
+                                                | |              | |
+                                                | |              | |
+                                                | |              | |
+                                                | '--------------' |
+                                                 '----------------'\, .-
+                                 */
+
+                for (int k = 0; k < lowercase.length; k++) {
+                    String letter = String.valueOf(lowercase[k]);
+                    String ASCIIletter = ASCIIalphabet[k];
+                    if (wordPlace.equalsIgnoreCase(letter)) {
+                        ASCIIform.set(j, ASCIIletter);
+                    }
+                }
+                                /*
+                                 * The code above iterates through an alphabet,
+                                 * *within* the loop that is iterating
+                                 * through each character in the word.
+                                 * for example, with "rhinoceros":
+                                 * if the progress is rh00o00ro0,
+                                 * it checks if r is 0. No.
+                                 * It then moves on to iterate through a, b, c...z,
+                                 * until it finds r.
+                                 * when it finds r in the alphabet,
+                                 * it notes that r is in spot 0 in the progress,
+                                 * and notes that r is the 18th letter in the alphabet
+                                 * and proceeds to set spot 0 in the ASCII word to
+                                 * the 18th String in the ASCII Block Alphabet:
+                                 *
+                                                [ .----------------.
+                                                | .--------------. |
+                                                | |  _______     | |
+                                                | | |_   __ \    | |
+                                                | |   | |__) |   | |
+                                                | |   |  __ /    | |
+                                                | |  _| |  \ \_  | |
+                                                | | |____| |___| | |
+                                                | |              | |
+                                                | '--------------' |
+                                                 '----------------' ,
+                                 */
+            }
+            p(ASCIIform);
+            if (!word.contains(guess)) {
+                numberWrong++;
+                p(drawing[numberWrong]);
+            }
+            if (numberWrong >= (drawing.length - 1) || numberCorrect >= word.length()) {
+                p("Good game! Would you like to play again?");
+                Scanner s00 = new Scanner(System.in);
+                String willPlay = s00.next();
+                if (willPlay.contains("y")) {
+                    wantsToPlay = true;
+                }
+                if (willPlay.contains("n")) {
+                    p("Okay, thanks for playing! Bring back someone else to play with!");
+                    wantsToPlay = false;
+                }
+                break;
+            }
+        }
     }
 }
