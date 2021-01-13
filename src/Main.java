@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -151,9 +152,6 @@ public class Main {
                         p("Welcome back, " + playerOneName + "! Enter your word whenever you are ready.");
                         Scanner s10 = new Scanner(System.in);
                         String word = s10.next();
-                        File file = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/InputCompendium.txt");
-                        FileWriter fileWriter = new FileWriter(file);
-                        fileWriter.write("hi");
                         for (int i = 0; i < 100; i++) {
                             p("""
                                     __________________________________________________________________________________________________________________________________________________________
@@ -314,7 +312,7 @@ public class Main {
                     ArrayList<String>Dictionary = Dictionaries.get(parsedInput);
                     int random = (int) (Math.random() * Dictionary.size());
                     String word = Dictionary.get(random);
-                    p(word);
+                    joke();
                     p("What would you like your name to be?");
                     Scanner s111 = new Scanner(System.in);
                     String name = s111.next();
@@ -335,7 +333,7 @@ public class Main {
     private static void getDictionaryPrompts() throws FileNotFoundException {
     int Gatsbycount = 0;
     ArrayList<String> Gatsbyuniquewords = new ArrayList<>();
-    File Gatsby = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/dictionary.txt");
+    File Gatsby = new File("/Users/colehenrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/dictionary.txt");
     Scanner scanner01 = new Scanner(Gatsby);
     while (scanner01.hasNext()) {
         String dictionaryWord = scanner01.next();
@@ -351,7 +349,7 @@ public class Main {
     }
     int JungleBookcount = 0;
     ArrayList<String> JungleBookuniquewords = new ArrayList<>();
-    File JungleBook = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/JungleBook.txt");
+    File JungleBook = new File("/Users/colehenrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/JungleBook.txt");
     Scanner scanner02 = new Scanner(JungleBook);
     while (scanner02.hasNext()) {
         String JungleBookDictionaryWord = scanner02.next();
@@ -367,7 +365,7 @@ public class Main {
     }
     int FullDictionarycount = 0;
     ArrayList<String> FullDictionaryuniquewords = new ArrayList<>();
-    File FullDictionary = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/JungleBook+Gatsby.txt");
+    File FullDictionary = new File("/Users/colehenrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/JungleBook+Gatsby.txt");
     Scanner scanner03 = new Scanner(FullDictionary);
     while (scanner03.hasNext()) {
         String FullDictionaryDictionaryWord = scanner03.next();
@@ -1376,7 +1374,7 @@ public static void getasciiDemo() throws InterruptedException {
     public static ArrayList<ArrayList<String>> getListofDictionaries() throws FileNotFoundException {
         ArrayList<ArrayList<String>> listofDictionaries = new ArrayList<>();
         ArrayList<String> Gatsbyuniquewords = new ArrayList<>();
-        File Gatsby = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/dictionary.txt");
+        File Gatsby = new File("/Users/colehenrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/dictionary.txt");
         Scanner scanner01 = new Scanner(Gatsby);
         while (scanner01.hasNext()) {
             String dictionaryWord = scanner01.next();
@@ -1390,7 +1388,7 @@ public static void getasciiDemo() throws InterruptedException {
             }
         }
         ArrayList<String> JungleBookuniquewords = new ArrayList<>();
-        File JungleBook = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/JungleBook.txt");
+        File JungleBook = new File("/Users/colehenrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/JungleBook.txt");
         Scanner scanner02 = new Scanner(JungleBook);
         while (scanner02.hasNext()) {
             String JungleBookDictionaryWord = scanner02.next();
@@ -1404,7 +1402,7 @@ public static void getasciiDemo() throws InterruptedException {
             }
         }
         ArrayList<String> FullDictionaryuniquewords = new ArrayList<>();
-        File FullDictionary = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/JungleBook+Gatsby.txt");
+        File FullDictionary = new File("/Users/colehenrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/JungleBook+Gatsby.txt");
         Scanner scanner03 = new Scanner(FullDictionary);
         while (scanner03.hasNext()) {
             String FullDictionaryDictionaryWord = scanner03.next();
@@ -1589,6 +1587,11 @@ public static void getasciiDemo() throws InterruptedException {
             // break;
             // }
         }
+    }
+    private static void joke() throws InterruptedException {
+        p("Pneumonoultramicroscopicsilicovolcanoconiosis");
+        Thread.sleep(6000);
+        p("Just kidding!");
     }
     }
 
