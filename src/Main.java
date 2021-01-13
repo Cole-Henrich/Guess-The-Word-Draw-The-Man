@@ -42,50 +42,50 @@ public class Main {
                 String isFamiliar = s.next();
                 if (isFamiliar.contains("n")) {
                     p("No problem! Here is the premise of the game:");
-                    //Thread.sleep(5000);
+                    Thread.sleep(5000);
                     p(" One player tries to guess the other player's secret word.");
-                    //Thread.sleep(5000);
+                    Thread.sleep(5000);
                     p(" One player will mentally decide on a word they know that they think is unique, and let the other player know when the word has been chosen.");
-                    //Thread.sleep(5000);
+                    Thread.sleep(5000);
                     p(" The screen will display a series of blanks:");
-                    //Thread.sleep(2000);
+                    Thread.sleep(2000);
                     p("    ________    ________    ________    ________    ________    ________    ________   ________    ________    ________    ________ ");
-                    //Thread.sleep(3000);
+                    Thread.sleep(3000);
                     p("  Corresponding to the length of the word. There are 12 blanks above, meaning our example secret word has 12 letters.");
-                    //Thread.sleep(5000);
+                    Thread.sleep(5000);
                     p(" For example, the word could be 'polynomial' or 'rhinoceros', or ANY 12 letter word.");
-                    //Thread.sleep(6000);
+                    Thread.sleep(6000);
                     p(" The guessing player will then guess a letter. If the secret word contains the letter, the system will then fill in every occurrence of the letter.");
-                    //Thread.sleep(5000);
-                    //Thread.sleep(6000);
+                    Thread.sleep(5000);
+                    Thread.sleep(6000);
                     p(" _ _ _ _ o _ _ _ o _");
-                    //Thread.sleep(3000);
+                    Thread.sleep(3000);
                     p(" if the secret word does not contain the letter guessed, the letter will be entered into a word bank of incorrect letters, and the program will start to draw a figure.");
-                    //Thread.sleep(6000);
+                    Thread.sleep(6000);
                     p(" For every incorrect letter guessed, the program will draw another part of the figure.");
-                    //Thread.sleep(5000);
+                    Thread.sleep(5000);
                     p(" After 12 incorrect guesses, the figure becomes fully drawn; the guesser loses and the answerer reveals the word.");
-                    //Thread.sleep(5000);
+                    Thread.sleep(5000);
                     p(" In usual hangman, the figure would be a man being hanged. However, this is not your average hangman game!");
-                    //Thread.sleep(5000);
+                    Thread.sleep(3000);
                 }
 
                 if (isFamiliar.contains("y")) p("Great!");
                 p("Would you like to play in regular mode:");
-                //Thread.sleep(1000);
+                Thread.sleep(2000);
                 p(" _ _ _ _ _ _ _ _ _ _");
-                //Thread.sleep(500);
+                Thread.sleep(1000);
                 p("""
                                         
                         R H I N O C E R O S\s
                         _ _ _ _ _ _ _ _ _ _
                                         
                         """);
-                //Thread.sleep(1000);
+                Thread.sleep(2000);
                 p("Or would you like to play in ASCII Art Mode:");
-                //Thread.sleep(1000);
+                Thread.sleep(2000);
                 getasciiDemo();
-                //Thread.sleep(1000);
+                Thread.sleep(4000);
 
 
                 p("""
@@ -134,7 +134,7 @@ public class Main {
                             }
                         }
                         p("Thanks, " + playerTwoName + "! Okay, now turn your back! Tell " + playerOneName + " it's time to devise a brain-boggler of a word!");
-
+                        Thread.sleep(10000);
                     //  }
 //            else {
 //                playerOneName = "friend!";
@@ -146,15 +146,23 @@ public class Main {
 //            }
 
                     while (wantsToPlay) {
-                        p("Welcome back, " + playerOneName + "! Enter your word whenever you are ready.");
 
                         System.out.flush();
+                        p("Welcome back, " + playerOneName + "! Enter your word whenever you are ready.");
                         Scanner s10 = new Scanner(System.in);
                         String word = s10.next();
                         File file = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/InputCompendium.txt");
                         FileWriter fileWriter = new FileWriter(file);
                         fileWriter.write("hi");
+                        for (int i = 0; i < 100; i++) {
+                            p("""
+                                    __________________________________________________________________________________________________________________________________________________________
+                                    __________________________________________________________________________________________________________________________________________________________
+                                    """
+                            );
+                        }
                         p(word.length());
+
                         for (int i = 0; i < word.length(); i++) {
                             char c = word.charAt(i);
                             for (int j = 0; j < lowercase.length; j++) {
@@ -173,8 +181,9 @@ public class Main {
                                 if (c == bigChar) ASCIIword.append(ASCIIblock);
                             }
                         }
-                        p(ASCIIword);
+                       // p(ASCIIword);
                         p("Nice word! That'll perplex " + playerTwoName + " for sure! Let " + playerTwoPronouns.get(1) + " know that " + playerTwoPronouns.get(0) + " can come back and start guessing...OOH, THIS WILL BE GOOD!");
+                        Thread.sleep(5000);
                         if(isASCII) {
                             guess(word, playerOneName, playerTwoName, 2,  1 );
                         }
@@ -295,7 +304,6 @@ public class Main {
                          */
                         //End source code/>
                     }
-
                 }
                 if (!isTwoPlayers) {
                     getDictionaryPrompts();
@@ -744,12 +752,12 @@ public static void p(Object object_to_print){
      * @throws InterruptedException
      */
 public static void getasciiDemo() throws InterruptedException {
-       //Thread.sleep(1000);
+        Thread.sleep(1000);
 
     for (int i = 0; i < 10; i++) {
         p(getASCIIalphabet()[26]);
     }
-       //Thread.sleep(1000);
+       Thread.sleep(1000);
         p(getASCIIalphabet()[17] + getASCIIalphabet()[7] + getASCIIalphabet()[8] + getASCIIalphabet()[13] + getASCIIalphabet()[14] + getASCIIalphabet()[2] + getASCIIalphabet()[6] + getASCIIalphabet()[17]+ getASCIIalphabet()[14] + getASCIIalphabet()[18]);
     }
 
@@ -1564,13 +1572,17 @@ public static void getasciiDemo() throws InterruptedException {
             if (willPlay.contains("n")) {
                 p("Okay, thanks for playing! Bring back someone else to play with!");
                 wantsToPlay = false;
+                Thread.sleep(1000);
                 p("In case you have never seen it, here is the drawing at its finest stage!");
+                Thread.sleep(2000);
                 p(getDrawing()[(getDrawing().length - 1)]); //last stage of the drawing.
+                Thread.sleep(12000);
                 p("Suggestions for improvement are welcome! " +
                         "An update may include allowing you to pick your dictionary if you play solo, " +
                         "and allowing you to PICK YOUR 'HANGMAN', " +
                         "meaning the program will split your chosen ASCII art into sections " +
                         "and then draw them when you guess letters incorrectly. Would that not be cool?!");
+                Thread.sleep(5000);
                 p("Bye! :)");
 
             }
