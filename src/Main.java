@@ -1,20 +1,22 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class Main {
     static char[] lowercase = {
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
     };
+    static ArrayList<ArrayList<String>>pronouns = new ArrayList<>();
     static boolean wantsToPlay = true;
     //][\/][ //-\ ][_) ]E  ][3 ``//  //-\  // ] _) ]][ ((5 << ]][ ]]p ][_ ]E   [[]] ][=   ][\/][ //-\ ((5 `][` ]E ][2    ][3 ][2 ]][ //-\ ][\][   ((5 ]E //-\
-    public static void main(String[] args) throws InterruptedException, FileNotFoundException {
+    public static void main(String[] args) throws InterruptedException, IOException {
 
         boolean isASCII = true;
         boolean isTwoPlayers = true;
         String playerOneName = "";
         String playerTwoName = "";
-        p(getASCIIalphabet()[0]);
         //Both contain three pronouns: subjective, objective, and possessive forms.
         ArrayList<String> playerOnePronouns = new ArrayList<>();
         ArrayList<String> playerTwoPronouns = new ArrayList<>();
@@ -117,18 +119,20 @@ public class Main {
                             String player;
                             player = getName();
                             getPronouns(playerPronouns);
-                            p("Thanks, " + player + "! Now let your partner have a seat at the computer!");
+                            if (i == 0) {
+                                p("Thanks, " + player + "! Now let your partner have a seat at the computer!");
+                            }
                             if (i == 0) {
                                 playerOneName = player;
                                 playerOnePronouns = playerPronouns;
+                                pronouns.add(playerOnePronouns);
                             }
                             if (i == 1) {
                                 playerTwoName = player;
                                 playerTwoPronouns = playerPronouns;
+                                pronouns.add(playerTwoPronouns);
                             }
                         }
-                        p(playerOnePronouns);
-                        p(playerTwoPronouns);
                         p("Thanks, " + playerTwoName + "! Okay, now turn your back! Tell " + playerOneName + " it's time to devise a brain-boggler of a word!");
 
                     //  }
@@ -147,6 +151,9 @@ public class Main {
                         System.out.flush();
                         Scanner s10 = new Scanner(System.in);
                         String word = s10.next();
+                        File file = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/InputCompendium.txt");
+                        FileWriter fileWriter = new FileWriter(file);
+                        fileWriter.write("hi");
                         p(word.length());
                         for (int i = 0; i < word.length(); i++) {
                             char c = word.charAt(i);
@@ -168,8 +175,17 @@ public class Main {
                         }
                         p(ASCIIword);
                         p("Nice word! That'll perplex " + playerTwoName + " for sure! Let " + playerTwoPronouns.get(1) + " know that " + playerTwoPronouns.get(0) + " can come back and start guessing...OOH, THIS WILL BE GOOD!");
-                        guess(word,playerTwoName);
-                       /* p("Hello " + playerTwoName + "! Enter the first letter you are guessing, whenever you are ready.");
+                        if(isASCII) {
+                            guess(word, playerOneName, playerTwoName, 2,  1 );
+                        }
+                        else {
+                            guess(word, playerOneName, playerTwoName, 2,  0);
+                        }
+                        //<Below: Commented-out source code for the guess() method in its implementation immediately prior to creating the method guess()
+                        /*
+
+                       p("Hello " + playerTwoName + "! Enter the first letter you are guessing, whenever you are ready.");
+
                         ArrayList<String> progressOnWord = new ArrayList<>();
                         ArrayList<String> ASCIIform = new ArrayList<>();
                         for (int i = 0; i < word.length(); i++) {
@@ -219,7 +235,7 @@ public class Main {
                                                 | '--------------' |
                                                  '----------------'\, .-
                                  */
-/*
+                        /*
                                 for (int k = 0; k < lowercase.length; k++) {
                                     String letter = String.valueOf(lowercase[k]);
                                     String ASCIIletter = ASCIIalphabet[k];
@@ -277,8 +293,8 @@ public class Main {
                         }
 
                          */
+                        //End source code/>
                     }
-
 
                 }
                 if (!isTwoPlayers) {
@@ -289,7 +305,17 @@ public class Main {
                     int parsedInput = Integer.parseInt(userInput0001);
                     ArrayList<String>Dictionary = Dictionaries.get(parsedInput);
                     int random = (int) (Math.random() * Dictionary.size());
-                    p(Dictionary.get(random));
+                    String word = Dictionary.get(random);
+                    p(word);
+                    p("What would you like your name to be?");
+                    Scanner s111 = new Scanner(System.in);
+                    String name = s111.next();
+                    if (isASCII) {
+                        guess("" + word, "the CPU", "" + name, 1, 1);
+                    }
+                    else{
+                        guess("" + word, "the CPU", "" + name, 1, 0);
+                    }
                 }
                 }
 
@@ -305,7 +331,6 @@ public class Main {
     Scanner scanner01 = new Scanner(Gatsby);
     while (scanner01.hasNext()) {
         String dictionaryWord = scanner01.next();
-        p(dictionaryWord);
         if (dictionaryWord.length() >= 10) {
             if (!dictionaryWord.contains("-")) {
                 dictionaryWord = repeatedReplace(dictionaryWord);
@@ -316,15 +341,12 @@ public class Main {
             }
         }
     }
-    p(Gatsbyuniquewords);
-    p(Gatsbycount);
     int JungleBookcount = 0;
     ArrayList<String> JungleBookuniquewords = new ArrayList<>();
     File JungleBook = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/JungleBook.txt");
     Scanner scanner02 = new Scanner(JungleBook);
     while (scanner02.hasNext()) {
         String JungleBookDictionaryWord = scanner02.next();
-        p(JungleBookDictionaryWord);
         if (JungleBookDictionaryWord.length() >= 8) {
             if (!JungleBookDictionaryWord.contains("-")) {
                 JungleBookDictionaryWord = repeatedReplace(JungleBookDictionaryWord);
@@ -335,16 +357,12 @@ public class Main {
             }
         }
     }
-    p(JungleBookuniquewords);
-    p(JungleBookcount);
-
     int FullDictionarycount = 0;
     ArrayList<String> FullDictionaryuniquewords = new ArrayList<>();
     File FullDictionary = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/JungleBook+Gatsby.txt");
     Scanner scanner03 = new Scanner(FullDictionary);
     while (scanner03.hasNext()) {
         String FullDictionaryDictionaryWord = scanner03.next();
-        p(FullDictionaryDictionaryWord);
         if (FullDictionaryDictionaryWord.length() >= 8) {
             if (!FullDictionaryDictionaryWord.contains("-")) {
                 FullDictionaryDictionaryWord = repeatedReplace(FullDictionaryDictionaryWord);
@@ -355,12 +373,14 @@ public class Main {
             }
         }
     }
-    p(FullDictionaryuniquewords);
-    p(FullDictionarycount);
     p("""
+            
             Bummer you're lonely! It's ok, this game loves solo players! 
+            
             Plus, we've got thousands of words so you can play for hours on end.
+            
             A word will be generated for you to guess. You can pick which dictionary it comes from: 
+            
             ------The Gatsby Dictionary-----
                         
             The Gatsby Dictionary is composed of all the unique words over 9 letters occurring in the Great Gatsby.
@@ -726,44 +746,21 @@ public static void p(Object object_to_print){
 public static void getasciiDemo() throws InterruptedException {
        //Thread.sleep(1000);
 
-        p("""
-                .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.\s
-                | .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |
-                | |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |
-                | |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |
-                | |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |
-                | |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |
-                | |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |
-                | |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |
-                | |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |
-                | '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |
-                 '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'\s""");
-
+    for (int i = 0; i < 10; i++) {
+        p(getASCIIalphabet()[26]);
+    }
        //Thread.sleep(1000);
-        p("""
-                .----------------.  .----------------.  .----------------.  .-----------------. .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.
-                         | .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |
-                         | |  _______     | || |  ____  ____  | || |     _____    | || | ____  _____  | || |     ____     | || |     ______   | || |  _________   | || |  _______     | || |     ____     | || |    _______   | |
-                         | | |_   __ \\    | || | |_   ||   _| | || |    |_   _|   | || ||_   \\|_   _| | || |   .'    `.   | || |   .' ___  |  | || | |_   ___  |  | || | |_   __ \\    | || |   .'    `.   | || |   /  ___  |  | |
-                         | |   | |__) |   | || |   | |__| |   | || |      | |     | || |  |   \\ | |   | || |  /  .--.  \\  | || |  / .'   \\_|  | || |   | |_  \\_|  | || |   | |__) |   | || |  /  .--.  \\  | || |  |  (__ \\_|  | |
-                         | |   |  __ /    | || |   |  __  |   | || |      | |     | || |  | |\\ \\| |   | || |  | |    | |  | || |  | |         | || |   |  _|  _   | || |   |  __ /    | || |  | |    | |  | || |   '.___`-.   | |
-                         | |  _| |  \\ \\_  | || |  _| |  | |_  | || |     _| |_    | || | _| |_\\   |_  | || |  \\  `--'  /  | || |  \\ `.___.'\\  | || |  _| |___/ |  | || |  _| |  \\ \\_  | || |  \\  `--'  /  | || |  |`\\____) |  | |
-                         | | |____| |___| | || | |____||____| | || |    |_____|   | || ||_____|\\____| | || |   `.____.'   | || |   `._____.'  | || | |_________|  | || | |____| |___| | || |   `.____.'   | || |  |_______.'  | |
-                         | |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |
-                         | '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |
-                         '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'""");
-
-
-}
+        p(getASCIIalphabet()[17] + getASCIIalphabet()[7] + getASCIIalphabet()[8] + getASCIIalphabet()[13] + getASCIIalphabet()[14] + getASCIIalphabet()[2] + getASCIIalphabet()[6] + getASCIIalphabet()[17]+ getASCIIalphabet()[14] + getASCIIalphabet()[18]);
+    }
 
     /**
      *
      * @return ASCIIalphabet the alphabet in ASCII block letters
      */
-        public static String[] getASCIIalphabet() {
+        private static String[] getASCIIalphabet() {
         String[] ASCIIalphabet = {
                 """
- .----------------.\s
+ .----------------.
 | .--------------. |
 | |      __      | |
 | |     /  \\     | |
@@ -773,10 +770,10 @@ public static void getasciiDemo() throws InterruptedException {
 | ||____|  |____|| |
 | |              | |
 | '--------------' |
- '----------------'\s""",
+ '----------------'""",
 
                 """
- .----------------.\s
+ .----------------.
 | .--------------. |
 | |   ______     | |
 | |  |_   _ \\    | |
@@ -786,9 +783,9 @@ public static void getasciiDemo() throws InterruptedException {
 | |  |_______/   | |
 | |              | |
 | '--------------' |
- '----------------'\s""",
+ '----------------'""",
                 """
- .----------------.\s
+ .----------------.
 | .--------------. |
 | |     ______   | |
 | |   .' ___  |  | |
@@ -798,9 +795,9 @@ public static void getasciiDemo() throws InterruptedException {
 | |   `._____.'  | |
 | |              | |
 | '--------------' |
- '----------------'\s""",
+ '----------------'""",
                 """
- .----------------.\s
+ .----------------.
 | .--------------. |
 | |  ________    | |
 | | |_   ___ `.  | |
@@ -810,8 +807,8 @@ public static void getasciiDemo() throws InterruptedException {
 | | |________.'  | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | |  _________   | |
 | | |_   ___  |  | |
@@ -821,8 +818,8 @@ public static void getasciiDemo() throws InterruptedException {
 | | |_________|  | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | |  _________   | |
 | | |_   ___  |  | |
@@ -832,8 +829,8 @@ public static void getasciiDemo() throws InterruptedException {
 | | |_____|      | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | |    ______    | |
 | |  .' ___  |   | |
@@ -843,8 +840,8 @@ public static void getasciiDemo() throws InterruptedException {
 | |  `._____.'   | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | |  ____  ____  | |
 | | |_   ||   _| | |
@@ -854,8 +851,8 @@ public static void getasciiDemo() throws InterruptedException {
 | | |____||____| | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | |     _____    | |
 | |    |_   _|   | |
@@ -865,8 +862,8 @@ public static void getasciiDemo() throws InterruptedException {
 | |    |_____|   | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | |     _____    | |
 | |    |_   _|   | |
@@ -876,8 +873,8 @@ public static void getasciiDemo() throws InterruptedException {
 | |  `.___.'     | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | |  ___  ____   | |
 | | |_  ||_  _|  | |
@@ -887,8 +884,8 @@ public static void getasciiDemo() throws InterruptedException {
 | | |____||____| | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | |   _____      | |
 | |  |_   _|     | |
@@ -898,8 +895,8 @@ public static void getasciiDemo() throws InterruptedException {
 | |  |________|  | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | | ____    ____ | |
 | ||_   \\  /   _|| |
@@ -909,7 +906,7 @@ public static void getasciiDemo() throws InterruptedException {
 | ||_____||_____|| |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
+ '----------------'""", """
  .-----------------.
 | .--------------. |
 | | ____  _____  | |
@@ -920,8 +917,8 @@ public static void getasciiDemo() throws InterruptedException {
 | ||_____|\\____| | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | |     ____     | |
 | |   .'    `.   | |
@@ -931,8 +928,8 @@ public static void getasciiDemo() throws InterruptedException {
 | |   `.____.'   | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | |   ______     | |
 | |  |_   __ \\   | |
@@ -942,8 +939,8 @@ public static void getasciiDemo() throws InterruptedException {
 | |  |_____|     | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | |    ___       | |
 | |  .'   '.     | |
@@ -953,8 +950,8 @@ public static void getasciiDemo() throws InterruptedException {
 | |  `.___.\\__|  | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | |  _______     | |
 | | |_   __ \\    | |
@@ -964,8 +961,8 @@ public static void getasciiDemo() throws InterruptedException {
 | | |____| |___| | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | |    _______   | |
 | |   /  ___  |  | |
@@ -975,8 +972,8 @@ public static void getasciiDemo() throws InterruptedException {
 | |  |_______.'  | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | |  _________   | |
 | | |  _   _  |  | |
@@ -986,8 +983,8 @@ public static void getasciiDemo() throws InterruptedException {
 | |   |_____|    | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | | _____  _____ | |
 | ||_   _||_   _|| |
@@ -997,8 +994,8 @@ public static void getasciiDemo() throws InterruptedException {
 | |    `.__.'    | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | | ____   ____  | |
 | ||_  _| |_  _| | |
@@ -1008,8 +1005,8 @@ public static void getasciiDemo() throws InterruptedException {
 | |     \\_/      | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | | _____  _____ | |
 | ||_   _||_   _|| |
@@ -1019,8 +1016,8 @@ public static void getasciiDemo() throws InterruptedException {
 | |  |__/  \\__|  | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | |  ____  ____  | |
 | | |_  _||_  _| | |
@@ -1030,8 +1027,8 @@ public static void getasciiDemo() throws InterruptedException {
 | | |____||____| | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | |  ____  ____  | |
 | | |_  _||_  _| | |
@@ -1041,8 +1038,8 @@ public static void getasciiDemo() throws InterruptedException {
 | |   |______|   | |
 | |              | |
 | '--------------' |
- '----------------'\s""", """
- .----------------.\s
+ '----------------'""", """
+ .----------------.
 | .--------------. |
 | |   ________   | |
 | |  |  __   _|  | |
@@ -1052,7 +1049,7 @@ public static void getasciiDemo() throws InterruptedException {
 | |  |________|  | |
 | |              | |
 | '--------------' |
- '----------------'\s""",
+ '----------------'""",
                 """
 .----------------.s
 | .--------------. |
@@ -1370,7 +1367,6 @@ public static void getasciiDemo() throws InterruptedException {
      */
     public static ArrayList<ArrayList<String>> getListofDictionaries() throws FileNotFoundException {
         ArrayList<ArrayList<String>> listofDictionaries = new ArrayList<>();
-        int Gatsbycount = 0;
         ArrayList<String> Gatsbyuniquewords = new ArrayList<>();
         File Gatsby = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/dictionary.txt");
         Scanner scanner01 = new Scanner(Gatsby);
@@ -1381,12 +1377,10 @@ public static void getasciiDemo() throws InterruptedException {
                     dictionaryWord = repeatedReplace(dictionaryWord);
                     if (!Gatsbyuniquewords.contains(dictionaryWord)) {
                         Gatsbyuniquewords.add(dictionaryWord);
-                        Gatsbycount++;
                     }
                 }
             }
         }
-        int JungleBookcount = 0;
         ArrayList<String> JungleBookuniquewords = new ArrayList<>();
         File JungleBook = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/JungleBook.txt");
         Scanner scanner02 = new Scanner(JungleBook);
@@ -1397,12 +1391,10 @@ public static void getasciiDemo() throws InterruptedException {
                     JungleBookDictionaryWord = repeatedReplace(JungleBookDictionaryWord);
                     if (!JungleBookuniquewords.contains(JungleBookDictionaryWord)) {
                         JungleBookuniquewords.add(JungleBookDictionaryWord);
-                        JungleBookcount++;
                     }
                 }
             }
         }
-        int FullDictionarycount = 0;
         ArrayList<String> FullDictionaryuniquewords = new ArrayList<>();
         File FullDictionary = new File("/Users/cole.henrich/IdeaProjects/Guess-The-Word-Draw-The-Man/src/JungleBook+Gatsby.txt");
         Scanner scanner03 = new Scanner(FullDictionary);
@@ -1413,7 +1405,6 @@ public static void getasciiDemo() throws InterruptedException {
                     FullDictionaryDictionaryWord = repeatedReplace(FullDictionaryDictionaryWord);
                     if (!FullDictionaryuniquewords.contains(FullDictionaryDictionaryWord)) {
                         FullDictionaryuniquewords.add(FullDictionaryDictionaryWord);
-                        FullDictionarycount++;
                     }
                 }
             }
@@ -1426,16 +1417,21 @@ public static void getasciiDemo() throws InterruptedException {
 
     /**
      * Runs the guess/check process in the ASCII style.
-     * @param word the word to process
-     * @param playerName the playerName to refer to the player as in dialogue.
+     * @param word the word to process, either autogenerated in the case of 1 player or player1's input with 2 players.
+     * @param players the number of players
+     * @param playerOneName the name by which to address the word-inventing player in dialogue.
+     * @param playerTwoName the name by which to address the guessing player in dialogue.
+     * @param format 0 or 1, 0 entailing regular format and 1 entailing ASCII
      */
-    private static void guess(String word, String playerName) {
-        p("Hello " + playerName + "! Enter the first letter you are guessing, whenever you are ready.");
+    private static void guess(String word, String playerOneName, String playerTwoName, int players, int format) throws InterruptedException {
+        boolean won = false;
+        boolean playing = true;
+        p("Hello " + playerTwoName + "! Enter the first letter you are guessing, whenever you are ready.");
         ArrayList<String> progressOnWord = new ArrayList<>();
         ArrayList<String> ASCIIform = new ArrayList<>();
         for (int i = 0; i < word.length(); i++) {
-            progressOnWord.add("0");
-            ASCIIform.add("0");
+            progressOnWord.add("_");
+            ASCIIform.add("_");
         }
         int numberCorrect = 0;
         int numberWrong = 0;
@@ -1457,12 +1453,13 @@ public static void getasciiDemo() throws InterruptedException {
                     }
                 }
                 numberCorrect += count;
-                p(numberCorrect);
+                p("Nice! So far you have guessed " + numberCorrect + " spaces correctly, out of " + word.length() + " total.");
+                Thread.sleep(1400);
             }
 
             for (int j = 0; j < progressOnWord.size(); j++) {
                 String wordPlace = progressOnWord.get(j);
-                if (wordPlace.equals("0")) {
+                if (wordPlace.equals("_")) {
                     ASCIIform.set(j, ASCIIblank);
                 }
                                 /*
@@ -1516,24 +1513,70 @@ public static void getasciiDemo() throws InterruptedException {
                                                  '----------------' ,
                                  */
             }
-            p(ASCIIform);
+
+            if (format == 1) {
+                p(ASCIIform);
+            }
+            else if (format == 0) {
+                p(progressOnWord);
+            }
             if (!word.contains(guess)) {
+                p("Whoops! Your dude's getting drawn!");
                 numberWrong++;
                 p(drawing[numberWrong]);
             }
-            if (numberWrong >= (drawing.length - 1) || numberCorrect >= word.length()) {
-                p("Good game! Would you like to play again?");
-                Scanner s00 = new Scanner(System.in);
-                String willPlay = s00.next();
-                if (willPlay.contains("y")) {
-                    wantsToPlay = true;
-                }
-                if (willPlay.contains("n")) {
-                    p("Okay, thanks for playing! Bring back someone else to play with!");
-                    wantsToPlay = false;
-                }
+            if ((numberWrong >= (drawing.length - 1)) || (numberCorrect >= (word.length()))) {
+                playing = false;
+                won = numberWrong >= (drawing.length - 1);
                 break;
             }
         }
+
+        ArrayList<String> player1pronouns = pronouns.get(0);
+        if (!playing) {
+            if (!won) {
+                p("Good game, " + playerTwoName + "!");
+                if (players == 1) {
+                    p(" The word was " + word + "! Better luck next time!");
+                }
+                if (players == 2) {
+
+                    p("Wow, " + playerOneName + " stumped you! Ask " + player1pronouns.get(1) + " to tell you that word of " + player1pronouns.get(2) + "!"); //get(1) = grammatically objective form of address. get(2) = possessive
+                }
+                p("Would you like to play again? (Enter yes/no)");
+            }
+            if (won) {
+                if (players == 1) {
+                    p("Nice job, " + playerTwoName + "! Even that big fat dictionary could not stop you!");
+                }
+                if (players == 2) {
+                    p("Nice job, " + playerTwoName + "!" + playerOneName + "'s big brain was no match for your wit! Please play again- maybe consider switching roles?");
+                }
+                p("Would you like to play again? (Enter yes/no)");
+            }
+
+            Scanner s00 = new Scanner(System.in);
+            String willPlay = s00.next();
+            if (willPlay.contains("y")) {
+                p("Awesome! Have fun!");
+                wantsToPlay = true;
+            }
+            if (willPlay.contains("n")) {
+                p("Okay, thanks for playing! Bring back someone else to play with!");
+                wantsToPlay = false;
+                p("In case you have never seen it, here is the drawing at its finest stage!");
+                p(getDrawing()[(getDrawing().length - 1)]); //last stage of the drawing.
+                p("Suggestions for improvement are welcome! " +
+                        "An update may include allowing you to pick your dictionary if you play solo, " +
+                        "and allowing you to PICK YOUR 'HANGMAN', " +
+                        "meaning the program will split your chosen ASCII art into sections " +
+                        "and then draw them when you guess letters incorrectly. Would that not be cool?!");
+                p("Bye! :)");
+
+            }
+            // break;
+            // }
+        }
     }
-}
+    }
+
